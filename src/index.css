@@ -52,6 +52,17 @@
 /* main */
 @import url("./blocks/main/main.css");
 
+/*login*/
+@import url("./blocks/login/login.css");
+@import url("./blocks/login/__title/login__title.css");
+@import url("./blocks/login/__form/login__form.css");
+@import url("./blocks/login/__form/_input/login__form_input.css");
+@import url("./blocks/login/__submit-btn/login__submit-btn.css");
+
+/*register*/
+@import url("./blocks/register/__subtitle/register__subtitle.css");
+@import url("./blocks/register/__link/register__link.css");
+
 /* profile */
 @import url("./blocks/profile/profile.css");
 @import url("./blocks/profile/__add-btn/profile__add-btn.css");

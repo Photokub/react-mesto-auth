@@ -9,6 +9,10 @@ import {EditProfilePopup} from "./EditProfilePopup";
 import {EditAvatarPopup} from "./EditAvatarPopup";
 import {AddPlacePopup} from "./AddPlacePopup";
 import {ConfirmPopup} from "./ConfirmPopup";
+import {Login} from "./Login.js";
+import {Register} from "./Register";
+import {Route, Switch, Redirect} from 'react-router-dom';
+import ProtectedRoute from "./ProtectedRoute";
 
 
 function App() {
@@ -21,6 +25,7 @@ function App() {
     const [cards, setCards] = useState([])
     const [selectedCard, setSelectedCard] = useState({name: '', link: ''})
     const [currentUser, setCurrentUser] = useState({})
+    const [loggedIn, setLoggedIn] = useState(false);
 
     useEffect(() => {
         api.getUserInfo()
@@ -118,46 +123,62 @@ function App() {
     }
 
     return (
-        <CurrentUserContext.Provider value={currentUser}>
-            <div className="page">
-                <Header/>
-                <Main
-                    onEditAvatar={handleEditAvatarClick}
-                    onEditProfile={handleEditProfileClick}
-                    onAddPlace={handleAddPlaceClick}
-                    onConfirmClick={handleConfirmClick}
-                    onImageClick={handleImagePopupClick}
-                    onCardClick={setSelectedCard}
-                    cards={cards}
-                    onCardLike={handleCardLike}
-                />
+    <CurrentUserContext.Provider value={currentUser}>
+        <div className="page">
+            <Header/>
+            <Switch>
+                <ProtectedRoute
+                    path="/"
+                    loggedIn={loggedIn}
+                    component={Main}
+                ></ProtectedRoute>
+                <Route path="/sign-in">
+                    <Login/>
+                </Route>
+                <Route path="/sign-up">
+                    <Register/>
+                </Route>
+                <Route>
+                    {loggedIn ? <Redirect to="/main"/> : <Redirect to="/sign-up" />}
+                </Route>
+            </Switch>
+            <Main
+                onEditAvatar={handleEditAvatarClick}
+                onEditProfile={handleEditProfileClick}
+                onAddPlace={handleAddPlaceClick}
+                onConfirmClick={handleConfirmClick}
+                onImageClick={handleImagePopupClick}
+                onCardClick={setSelectedCard}
+                cards={cards}
+                onCardLike={handleCardLike}
+            />
 
-                <Footer/>
+            <Footer/>
 
-                <ImagePopup
-                    isOpen={isImagePopupOpen}
-                    card={selectedCard}
-                    onClose={closeAllPopups}
-                />
+            <ImagePopup
+                isOpen={isImagePopupOpen}
+                card={selectedCard}
+                onClose={closeAllPopups}
+            />
 
-                <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups}
-                                  onUpdateUser={handleUpdateUser}/>
+            <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups}
+                              onUpdateUser={handleUpdateUser}/>
 
-                <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups}
-                                 onUpdateAvatar={handleUpdateAvatar}/>
+            <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups}
+                             onUpdateAvatar={handleUpdateAvatar}/>
 
-                <AddPlacePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups}
-                               onAddPlace={handleAddPlaceSubmit}/>
+            <AddPlacePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups}
+                           onAddPlace={handleAddPlaceSubmit}/>
 
-                <ConfirmPopup
-                    isOpen={isConfirmPopupOpen}
-                    onClose={closeAllPopups}
-                    onDelete={handleCardDelete}
-                    card={selectedCard}
-                />
+            <ConfirmPopup
+                isOpen={isConfirmPopupOpen}
+                onClose={closeAllPopups}
+                onDelete={handleCardDelete}
+                card={selectedCard}
+            />
 
-            </div>
-        </CurrentUserContext.Provider>
+        </div>
+    </CurrentUserContext.Provider>
     );
 }
 
