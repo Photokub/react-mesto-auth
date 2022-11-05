@@ -123,62 +123,65 @@ function App() {
     }
 
     return (
-    <CurrentUserContext.Provider value={currentUser}>
-        <div className="page">
-            <Header/>
-            <Switch>
-                <ProtectedRoute
-                    path="/"
-                    loggedIn={loggedIn}
-                    component={Main}
-                ></ProtectedRoute>
-                <Route path="/sign-in">
-                    <Login/>
-                </Route>
-                <Route path="/sign-up">
-                    <Register/>
-                </Route>
-                <Route>
-                    {loggedIn ? <Redirect to="/main"/> : <Redirect to="/sign-up" />}
-                </Route>
-            </Switch>
-            <Main
-                onEditAvatar={handleEditAvatarClick}
-                onEditProfile={handleEditProfileClick}
-                onAddPlace={handleAddPlaceClick}
-                onConfirmClick={handleConfirmClick}
-                onImageClick={handleImagePopupClick}
-                onCardClick={setSelectedCard}
-                cards={cards}
-                onCardLike={handleCardLike}
-            />
+        <CurrentUserContext.Provider value={currentUser}>
+            <div className="page">
+                <Header/>
+                <Switch>
+                    <ProtectedRoute
+                        path="/mesto-react"
+                        loggedIn={loggedIn}
+                        onEditAvatar={handleEditAvatarClick}
+                        onEditProfile={handleEditProfileClick}
+                        onAddPlace={handleAddPlaceClick}
+                        onConfirmClick={handleConfirmClick}
+                        onImageClick={handleImagePopupClick}
+                        onCardClick={setSelectedCard}
+                        cards={cards}
+                        onCardLike={handleCardLike}
+                        component={Main}
+                    />
+                    <Route path="/sign-in">
+                        <Login/>
+                    </Route>
+                    <Route path="/sign-up">
+                        <Register/>
+                    </Route>
+                    <Route>
+                        {loggedIn ? <Redirect to="/mesto-react"/> : <Redirect to="/sign-up"/>}
+                    </Route>
+                </Switch>
 
-            <Footer/>
 
-            <ImagePopup
-                isOpen={isImagePopupOpen}
-                card={selectedCard}
-                onClose={closeAllPopups}
-            />
 
-            <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups}
-                              onUpdateUser={handleUpdateUser}/>
 
-            <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups}
-                             onUpdateAvatar={handleUpdateAvatar}/>
+                <Footer/>
 
-            <AddPlacePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups}
-                           onAddPlace={handleAddPlaceSubmit}/>
 
-            <ConfirmPopup
-                isOpen={isConfirmPopupOpen}
-                onClose={closeAllPopups}
-                onDelete={handleCardDelete}
-                card={selectedCard}
-            />
 
-        </div>
-    </CurrentUserContext.Provider>
+                <ImagePopup
+                    isOpen={isImagePopupOpen}
+                    card={selectedCard}
+                    onClose={closeAllPopups}
+                />
+
+                <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups}
+                                  onUpdateUser={handleUpdateUser}/>
+
+                <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups}
+                                 onUpdateAvatar={handleUpdateAvatar}/>
+
+                <AddPlacePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups}
+                               onAddPlace={handleAddPlaceSubmit}/>
+
+                <ConfirmPopup
+                    isOpen={isConfirmPopupOpen}
+                    onClose={closeAllPopups}
+                    onDelete={handleCardDelete}
+                    card={selectedCard}
+                />
+
+            </div>
+        </CurrentUserContext.Provider>
     );
 }
 

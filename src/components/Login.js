@@ -3,6 +3,7 @@ import React from "react";
 
 export function Login() {
     return (
+        <main className="main">
             <section className="login">
                 <h2 className="login__title">Вход</h2>
                 <form className="login__form" method="post">
@@ -11,5 +12,6 @@ export function Login() {
                     <button className="login__submit-btn">Войти</button>
                 </form>
             </section>
+            </main>
     )
 }

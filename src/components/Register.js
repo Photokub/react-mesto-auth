@@ -3,6 +3,7 @@ import {Link} from "react-router-dom";
 
 export function Register() {
     return (
+        <main className="main">
         <section className="login">
             <h2 className="login__title">Регистрация</h2>
             <form className="login__form" method="post">
@@ -12,5 +13,6 @@ export function Register() {
             </form>
            <span className="register__subtitle">Уже зарегистрированы? <Link className="register__link" to="/sign-in">Войти</Link></span>
         </section>
+            </main>
     )
 }
