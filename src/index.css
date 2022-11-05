@@ -37,6 +37,9 @@
 @import url("./blocks/popup/__container-confirm-delete/popup__container-confirm-delete.css");
 @import url("./blocks/popup/__confirm-delete-button/popup__confirm-delete-button.css");
 @import url("./blocks/popup/__change-avatar/popup__container-change-avatar.css");
+@import url("./blocks/popup/__icon/popup__icon.css");
+@import url("./blocks/popup/__infoTooltip/_title/popup__infoTooltip_title.css");
+@import url("./blocks/popup/__container-infoTooltip/popup__container-infoTooltip.css");
 
 /* form */
 @import url("./blocks/form/form.css");

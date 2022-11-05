@@ -13,6 +13,7 @@ import {Login} from "./Login.js";
 import {Register} from "./Register";
 import {Route, Switch, Redirect} from 'react-router-dom';
 import ProtectedRoute from "./ProtectedRoute";
+import {InfoTooltip} from "./InfoTooltip";
 
 
 function App() {
@@ -22,10 +23,12 @@ function App() {
     const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
     const [isImagePopupOpen, setIsImagePopupOpen] = useState(false);
     const [isConfirmPopupOpen, setIsConfirmPopupOpen] = useState(false);
+    const [isInfoTooltipPopupOpen, setIsInfoTooltipPopupOpen] = useState(false);
     const [cards, setCards] = useState([])
     const [selectedCard, setSelectedCard] = useState({name: '', link: ''})
     const [currentUser, setCurrentUser] = useState({})
     const [loggedIn, setLoggedIn] = useState(false);
+    // const [infoTooltip, setInfoTooltip] =
 
     useEffect(() => {
         api.getUserInfo()
@@ -56,6 +59,10 @@ function App() {
         setIsImagePopupOpen(true)
     }
 
+    function handleInfoTooltipPopupClick() {
+        setIsInfoTooltipPopupOpen(true)
+    }
+
     function closeAllPopups() {
         setIsConfirmPopupOpen(false)
         setIsAddPlacePopupOpen(false)
@@ -63,6 +70,7 @@ function App() {
         setIsEditAvatarPopupOpen(false)
         setIsImagePopupOpen(false)
         setSelectedCard({name: '', link: ''})
+        setIsInfoTooltipPopupOpen(false)
     }
 
     function handleUpdateUser({name, about}) {
@@ -152,10 +160,7 @@ function App() {
                 </Switch>
 
 
-
-
                 <Footer/>
-
 
 
                 <ImagePopup
@@ -179,6 +184,14 @@ function App() {
                     onDelete={handleCardDelete}
                     card={selectedCard}
                 />
+
+                <InfoTooltip
+                isOpen={isInfoTooltipPopupOpen}
+                onClose={closeAllPopups}
+                loggedIn={loggedIn}
+                />
+
+
 
             </div>
         </CurrentUserContext.Provider>
