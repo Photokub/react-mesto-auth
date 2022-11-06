@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import {useEffect, useState, useCallback} from 'react';
 import {Header} from "./Header";
 import {Main} from "./Main";
 import {Footer} from "./Footer";
@@ -14,6 +14,7 @@ import {Register} from "./Register";
 import {Route, Switch, Redirect} from 'react-router-dom';
 import ProtectedRoute from "./ProtectedRoute";
 import {InfoTooltip} from "./InfoTooltip";
+import * as Auth from '../utils/Auth.js';
 
 
 function App() {
@@ -28,7 +29,10 @@ function App() {
     const [selectedCard, setSelectedCard] = useState({name: '', link: ''})
     const [currentUser, setCurrentUser] = useState({})
     const [loggedIn, setLoggedIn] = useState(false);
-    // const [infoTooltip, setInfoTooltip] =
+    const [userData, setUserData] = useState({
+        username: '', email: ''
+    })
+    // const [infoTooltip, setInfoTooltip] = useState(false);
 
     useEffect(() => {
         api.getUserInfo()
@@ -130,6 +134,19 @@ function App() {
         })
     }
 
+    const cbAuthenticate = useCallback((data) => {
+        localStorage.setItem('jwt', data.jwt)
+        setLoggedIn(true)
+        setUserData(data.user);
+    }, []);
+
+    const cbRegister = useCallback(async ({password, email}) => {
+        const res = await Auth.register({password, email});
+        cbAuthenticate(res);
+        setIsInfoTooltipPopupOpen(true)
+        return res;
+    }, [cbAuthenticate]);
+
     return (
         <CurrentUserContext.Provider value={currentUser}>
             <div className="page">
@@ -152,7 +169,7 @@ function App() {
                         <Login/>
                     </Route>
                     <Route path="/sign-up">
-                        <Register/>
+                        <Register isLoggedId={loggedIn} onRegister={cbRegister} onInfoTooltip={setIsInfoTooltipPopupOpen}/>
                     </Route>
                     <Route>
                         {loggedIn ? <Redirect to="/mesto-react"/> : <Redirect to="/sign-up"/>}
