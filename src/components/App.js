@@ -147,6 +147,21 @@ function App() {
         return res;
     }, [cbAuthenticate]);
 
+    const cbLogin = useCallback(async ({password, email}) => {
+            try {
+                const data = await Auth.authorize({password, email});
+                if (!data) {
+                    setIsInfoTooltipPopupOpen(true)
+                }
+                if (data.jwt) {
+                    cbAuthenticate(data)
+                }
+            } finally {
+                setIsInfoTooltipPopupOpen(true)
+            }
+        }
+    )
+
     return (
         <CurrentUserContext.Provider value={currentUser}>
             <div className="page">
@@ -166,10 +181,11 @@ function App() {
                         component={Main}
                     />
                     <Route path="/sign-in">
-                        <Login/>
+                        <Login isLoggedId={loggedIn} onLogin={cbLogin} onInfoTooltip={setIsInfoTooltipPopupOpen}/>
                     </Route>
                     <Route path="/sign-up">
-                        <Register isLoggedId={loggedIn} onRegister={cbRegister} onInfoTooltip={setIsInfoTooltipPopupOpen}/>
+                        <Register isLoggedId={loggedIn} onRegister={cbRegister}
+                                  onInfoTooltip={setIsInfoTooltipPopupOpen}/>
                     </Route>
                     <Route>
                         {loggedIn ? <Redirect to="/mesto-react"/> : <Redirect to="/sign-up"/>}
@@ -203,11 +219,10 @@ function App() {
                 />
 
                 <InfoTooltip
-                isOpen={isInfoTooltipPopupOpen}
-                onClose={closeAllPopups}
-                loggedIn={loggedIn}
+                    isOpen={isInfoTooltipPopupOpen}
+                    onClose={closeAllPopups}
+                    loggedIn={loggedIn}
                 />
-
 
 
             </div>
