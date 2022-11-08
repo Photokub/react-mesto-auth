@@ -135,7 +135,7 @@ function App() {
     }
 
     const cbAuthenticate = useCallback((data) => {
-        localStorage.setItem('jwt', data.jwt)
+        localStorage.setItem('jwt', data.token)
         setLoggedIn(true)
         setUserData(data.user);
     }, []);
@@ -153,11 +153,11 @@ function App() {
                 if (!data) {
                     setIsInfoTooltipPopupOpen(true)
                 }
-                if (data.jwt) {
+                if (data.token) {
                     cbAuthenticate(data)
                 }
             } finally {
-                setIsInfoTooltipPopupOpen(true)
+                setIsInfoTooltipPopupOpen(false)
             }
         }
     )

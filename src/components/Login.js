@@ -18,9 +18,10 @@ export function Login({isLoggedId, onLogin, onInfoTooltip}) {
     }
 
     const handleSubmit = (e) => {
-        let {password, email} = userData;
+        // let {password, email} = userData;
         e.preventDefault();
-        onLogin({password, email})
+        // onLogin({password, email})
+        onLogin(userData)
             .catch(
                 onInfoTooltip
             )
