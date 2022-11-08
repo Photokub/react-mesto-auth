@@ -32,6 +32,7 @@ function App() {
     const [userData, setUserData] = useState({
         username: '', email: ''
     })
+    const [isAtRegisterPage, setIsAtRegisterPage] = useState(true)
     // const [infoTooltip, setInfoTooltip] = useState(false);
 
     useEffect(() => {
@@ -66,6 +67,14 @@ function App() {
     function handleInfoTooltipPopupClick() {
         setIsInfoTooltipPopupOpen(true)
     }
+
+    // function handleIsAtRegisterPageClick(){
+    //     setIsAtRegisterPage(false)
+    // }
+
+    const cbHeaderBtn = useCallback(() => {
+        setIsAtRegisterPage(false);
+    }, []);
 
     function closeAllPopups() {
         setIsConfirmPopupOpen(false)
@@ -165,7 +174,12 @@ function App() {
     return (
         <CurrentUserContext.Provider value={currentUser}>
             <div className="page">
-                <Header/>
+
+                <Header
+                atPage={isAtRegisterPage}
+                onClick = {cbHeaderBtn}
+                />
+
                 <Switch>
                     <ProtectedRoute
                         path="/mesto-react"
