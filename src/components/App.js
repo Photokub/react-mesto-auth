@@ -190,8 +190,6 @@ function App() {
                         cards={cards}
                         onCardLike={handleCardLike}
                         component={Main}
-                        logOut={cbLogOut}
-                        isLoggedId={loggedIn}
                     />
                     <Route path="/sign-in">
                         <Header
