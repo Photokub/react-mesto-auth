@@ -167,10 +167,16 @@ function App() {
         }
     )
 
+    const cbLogOut = useCallback( () =>
+    {setLoggedIn(false);
+    localStorage.removeItem('jwt')
+    },[]
+)
+
     return (
         <CurrentUserContext.Provider value={currentUser}>
             <div className="page">
-
+                {loggedIn ? <Header logOut={cbLogOut} loggedIn={loggedIn}/> : null}
                 <Switch>
                     <ProtectedRoute
                         path="/mesto-react"
@@ -184,11 +190,15 @@ function App() {
                         cards={cards}
                         onCardLike={handleCardLike}
                         component={Main}
+                        logOut={cbLogOut}
+                        isLoggedId={loggedIn}
                     />
                     <Route path="/sign-in">
                         <Header
                         btnEnter={false}
                         btnReg={true}
+                        isLoggedId={loggedIn}
+                        logOut={cbLogOut}
                         />
                         <Login isLoggedId={loggedIn} onLogin={cbLogin} onInfoTooltip={setIsInfoTooltipPopupOpen}/>
                     </Route>
@@ -196,6 +206,8 @@ function App() {
                         <Header
                             btnEnter={true}
                             btnReg={false}
+                            isLoggedId={loggedIn}
+                            logOut={cbLogOut}
                         />
                         <Register isLoggedId={loggedIn} onRegister={cbRegister}
                                   onInfoTooltip={setIsInfoTooltipPopupOpen}/>

@@ -25,5 +25,4 @@ export const authorize = ({password, email}) => {
 };
 
 
-
 const checkResponse = (res) => res.ok ? res.json() : Promise.reject(`Ошибка: ${res.statusText}`)
