@@ -10,10 +10,10 @@ export function Header({btnEnter, btnReg ,loggedIn, logOut, userData}) {
             {btnEnter && <Link className="header__link" to="/sign-in">Войти</Link>}
             {btnReg && <Link className="header__link" to="/sign-up">Регистрация</Link>}
             {loggedIn &&
-                <>
-                <p className="header__userData">{userData}</p>
+                <div className="header__container" >
+                <p className="header__userData">{userData.email}</p>
                     <Link className="header__link" to="/sign-up" onClick={logOut}>Выйти</Link>
-                </>
+                </div>
                 }
         </header>
     )
