@@ -8,4 +8,9 @@
 
     color: #FFFFFF;
     margin-top:6px;
+    transition: .35s;
+}
+
+.header__link:hover{
+    opacity: .6;
 }
