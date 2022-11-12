@@ -69,9 +69,6 @@ function App() {
     }
 
 
-
-
-
     function closeAllPopups() {
         setIsConfirmPopupOpen(false)
         setIsAddPlacePopupOpen(false)
@@ -176,7 +173,7 @@ function App() {
     return (
         <CurrentUserContext.Provider value={currentUser}>
             <div className="page">
-                {loggedIn ? <Header logOut={cbLogOut} loggedIn={loggedIn}/> : null}
+                {loggedIn ? <Header logOut={cbLogOut} loggedIn={loggedIn} userData={cbAuthenticate.data.user}/> : null}
                 <Switch>
                     <ProtectedRoute
                         path="/mesto-react"
@@ -190,6 +187,7 @@ function App() {
                         cards={cards}
                         onCardLike={handleCardLike}
                         component={Main}
+                        // children={Header}
                     />
                     <Route path="/sign-in">
                         <Header
