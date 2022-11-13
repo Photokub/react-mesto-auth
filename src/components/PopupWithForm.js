@@ -13,7 +13,7 @@ export function PopupWithForm({isOpen, onClose, name, title, btnText, children, 
                     {children}
                     <button
                         className="form__save-btn"
-                            type="submit"
+                        type="submit"
                     >
                         {btnText}
                     </button>

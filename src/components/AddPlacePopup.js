@@ -1,21 +1,24 @@
 import {PopupWithForm} from "./PopupWithForm";
-import {useRef} from "react";
+import {useEffect, useRef} from "react";
 
 export function AddPlacePopup({isOpen, onClose, onAddPlace}) {
 
-    const CardNameRef = useRef()
-    const CardLinkRef = useRef()
+    const cardNameRef = useRef()
+    const cardLinkRef = useRef()
 
     function handleSubmit(e) {
         e.preventDefault();
         onAddPlace({
-                name: CardNameRef.current.value,
-                link: CardLinkRef.current.value
+                name: cardNameRef.current.value,
+                link: cardLinkRef.current.value
             }
-        );
-        CardNameRef.current.value = ('')
-        CardLinkRef.current.value = ('')
+        )
     }
+
+    useEffect(() => {
+        cardNameRef.current.value = ('')
+        cardLinkRef.current.value = ('')
+    }, [onClose])
 
     return (
         <PopupWithForm
@@ -29,13 +32,13 @@ export function AddPlacePopup({isOpen, onClose, onAddPlace}) {
             <label className="form__field">
                 <input className="form__input form__input_type_title" type="text" name="name"
                        defaultValue=""
-                       ref={CardNameRef}
+                       ref={cardNameRef}
                        placeholder="Название" required minLength="2" maxLength="30"/>
                 <span className="form__input-error" id="name-error"></span>
             </label>
             <label className="form__field">
                 <input className="form__input form__input_type_link" type="url" name="link" defaultValue=""
-                       ref={CardLinkRef}
+                       ref={cardLinkRef}
                        placeholder="Ссылка на картинку" required/>
                 <span className="form__input-error" id="link-error"></span>
             </label>

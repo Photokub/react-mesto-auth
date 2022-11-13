@@ -130,26 +130,26 @@ function App() {
         })
     }
 
-    const cbAuthenticate = useCallback((data) => {
+    const authenticate = useCallback((data) => {
         localStorage.setItem('jwt', data.token)
         setLoggedIn(true)
     }, []);
 
-    const cbRegister = useCallback(async ({password, email}) => {
+    const registration = useCallback(async ({password, email}) => {
         const res = await Auth.register({password, email});
-        cbAuthenticate(res);
+        authenticate(res);
         setIsInfoTooltipPopupOpen(true)
         return res;
-    }, [cbAuthenticate]);
+    }, [authenticate]);
 
-    const cbLogin = useCallback(async ({password, email}) => {
+    const login = useCallback(async ({password, email}) => {
             try {
                 const data = await Auth.authorize({password, email});
                 if (!data) {
                     setIsInfoTooltipPopupOpen(true)
                 }
                 if (data.token) {
-                    cbAuthenticate(data)
+                    authenticate(data)
                     setUserData({password, email})
                 }
             } finally {
@@ -158,9 +158,9 @@ function App() {
         }
     )
 
-    const cbTokenCheck = useCallback(async () => {
+    const checkToken = useCallback(async () => {
         try {
-            let jwt = localStorage.getItem('jwt');
+            const jwt = localStorage.getItem('jwt');
             if (!jwt) {
                 throw new Error('no token');
             }
@@ -174,21 +174,21 @@ function App() {
     }, []);
 
     useEffect(() => {
-        cbTokenCheck()
-    }, [cbTokenCheck]);
+        checkToken()
+    }, [checkToken]);
 
 
-    const cbLogOut = useCallback( () =>
-    {setLoggedIn(false);
-    localStorage.removeItem('jwt');
-        setUserData({ username: "", email: ""})
-    },[]
-)
+    const cbLogOut = useCallback(() => {
+            setLoggedIn(false);
+            localStorage.removeItem('jwt');
+            setUserData({username: "", email: ""})
+        }, []
+    )
 
     return (
         <CurrentUserContext.Provider value={currentUser}>
             <div className="page">
-                {loggedIn ? <Header logOut={cbLogOut} loggedIn={loggedIn}  userData={userData}/> : null}
+                {loggedIn ? <Header logOut={cbLogOut} loggedIn={loggedIn} userData={userData}/> : null}
                 <Switch>
                     <ProtectedRoute
                         path="/mesto-react"
@@ -205,12 +205,12 @@ function App() {
                     />
                     <Route path="/sign-in">
                         <Header
-                        btnEnter={false}
-                        btnReg={true}
-                        isLoggedId={loggedIn}
-                        logOut={cbLogOut}
+                            btnEnter={false}
+                            btnReg={true}
+                            isLoggedId={loggedIn}
+                            logOut={cbLogOut}
                         />
-                        <Login isLoggedId={loggedIn} onLogin={cbLogin} onInfoTooltip={setIsInfoTooltipPopupOpen}/>
+                        <Login isLoggedId={loggedIn} onLogin={login} onInfoTooltip={setIsInfoTooltipPopupOpen}/>
                     </Route>
                     <Route path="/sign-up">
                         <Header
@@ -219,7 +219,7 @@ function App() {
                             isLoggedId={loggedIn}
                             logOut={cbLogOut}
                         />
-                        <Register isLoggedId={loggedIn} onRegister={cbRegister}
+                        <Register isLoggedId={loggedIn} onRegister={registration}
                                   onInfoTooltip={setIsInfoTooltipPopupOpen}/>
                     </Route>
                     <Route>
