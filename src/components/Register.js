@@ -21,9 +21,9 @@ export function Register({isLoggedId, onRegister, onInfoTooltip}) {
         let {password, email} = userData;
         e.preventDefault();
         onRegister({password, email})
-            .catch(
-                onInfoTooltip
-            )
+            // .catch(
+            //     onInfoTooltip
+            // )
     }
 
     if (isLoggedId) {

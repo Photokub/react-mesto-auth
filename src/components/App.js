@@ -11,7 +11,7 @@ import {AddPlacePopup} from "./AddPlacePopup";
 import {ConfirmPopup} from "./ConfirmPopup";
 import {Login} from "./Login.js";
 import {Register} from "./Register";
-import {Route, Switch, Redirect} from 'react-router-dom';
+import {Route, Switch, Redirect, Link} from 'react-router-dom';
 import ProtectedRoute from "./ProtectedRoute";
 import {InfoTooltip} from "./InfoTooltip";
 import * as Auth from '../utils/Auth.js';
@@ -164,8 +164,10 @@ function App() {
             if (!jwt) {
                 throw new Error('no token');
             }
-            if (jwt) {
+            const user = await Auth.getContent(jwt)
+            if (user) {
                 setLoggedIn(true)
+                setUserData(user.data);
             }
         } catch {
         } finally {
@@ -178,7 +180,7 @@ function App() {
     }, [checkToken]);
 
 
-    const cbLogOut = useCallback(() => {
+    const logOut = useCallback(() => {
             setLoggedIn(false);
             localStorage.removeItem('jwt');
             setUserData({username: "", email: ""})
@@ -188,7 +190,19 @@ function App() {
     return (
         <CurrentUserContext.Provider value={currentUser}>
             <div className="page">
-                {loggedIn ? <Header logOut={cbLogOut} loggedIn={loggedIn} userData={userData}/> : null}
+                {/*{loggedIn ? <Header logOut={logOut} loggedIn={loggedIn} userData={userData}/> : null}*/}
+                {/*{loggedIn ? <Header logOut={logOut} loggedIn={loggedIn} userData={userData}/> : null}*/}
+         <Header>
+             <Route path="/mesto-react">
+                 <Link className="header__link" to="/sign-up" >Выйти</Link>
+             </Route>
+             <Route  path="/sign-in">
+                 <Link className="header__link" to="/sign-up">Регистрация</Link>
+             </Route>
+             <Route  path="/sign-up">
+                 <Link className="header__link" to="/sign-in">Вход</Link>
+             </Route>
+         </Header>
                 <Switch>
                     <ProtectedRoute
                         path="/mesto-react"
@@ -204,21 +218,21 @@ function App() {
                         component={Main}
                     />
                     <Route path="/sign-in">
-                        <Header
-                            btnEnter={false}
-                            btnReg={true}
-                            isLoggedId={loggedIn}
-                            logOut={cbLogOut}
-                        />
+                        {/*<Header*/}
+                        {/*    btnEnter={false}*/}
+                        {/*    btnReg={true}*/}
+                        {/*    isLoggedId={loggedIn}*/}
+                        {/*    logOut={logOut}*/}
+                        {/*/>*/}
                         <Login isLoggedId={loggedIn} onLogin={login} onInfoTooltip={setIsInfoTooltipPopupOpen}/>
                     </Route>
                     <Route path="/sign-up">
-                        <Header
-                            btnEnter={true}
-                            btnReg={false}
-                            isLoggedId={loggedIn}
-                            logOut={cbLogOut}
-                        />
+                        {/*<Header*/}
+                        {/*    btnEnter={true}*/}
+                        {/*    btnReg={false}*/}
+                        {/*    isLoggedId={loggedIn}*/}
+                        {/*    logOut={logOut}*/}
+                        {/*/>*/}
                         <Register isLoggedId={loggedIn} onRegister={registration}
                                   onInfoTooltip={setIsInfoTooltipPopupOpen}/>
                     </Route>
