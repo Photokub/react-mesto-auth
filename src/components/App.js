@@ -190,19 +190,10 @@ function App() {
     return (
         <CurrentUserContext.Provider value={currentUser}>
             <div className="page">
-                {/*{loggedIn ? <Header logOut={logOut} loggedIn={loggedIn} userData={userData}/> : null}*/}
-                {/*{loggedIn ? <Header logOut={logOut} loggedIn={loggedIn} userData={userData}/> : null}*/}
-         <Header>
-             <Route path="/mesto-react">
-                 <Link className="header__link" to="/sign-up" >Выйти</Link>
-             </Route>
-             <Route  path="/sign-in">
-                 <Link className="header__link" to="/sign-up">Регистрация</Link>
-             </Route>
-             <Route  path="/sign-up">
-                 <Link className="header__link" to="/sign-in">Вход</Link>
-             </Route>
-         </Header>
+                <Header loggedIn={loggedIn}
+                        userData={userData}
+                        logOut={logOut}
+                />
                 <Switch>
                     <ProtectedRoute
                         path="/mesto-react"
@@ -218,21 +209,12 @@ function App() {
                         component={Main}
                     />
                     <Route path="/sign-in">
-                        {/*<Header*/}
-                        {/*    btnEnter={false}*/}
-                        {/*    btnReg={true}*/}
-                        {/*    isLoggedId={loggedIn}*/}
-                        {/*    logOut={logOut}*/}
-                        {/*/>*/}
-                        <Login isLoggedId={loggedIn} onLogin={login} onInfoTooltip={setIsInfoTooltipPopupOpen}/>
+                        <Login isLoggedId={loggedIn}
+                               onLogin={login}
+                               onInfoTooltip={setIsInfoTooltipPopupOpen}
+                        />
                     </Route>
                     <Route path="/sign-up">
-                        {/*<Header*/}
-                        {/*    btnEnter={true}*/}
-                        {/*    btnReg={false}*/}
-                        {/*    isLoggedId={loggedIn}*/}
-                        {/*    logOut={logOut}*/}
-                        {/*/>*/}
                         <Register isLoggedId={loggedIn} onRegister={registration}
                                   onInfoTooltip={setIsInfoTooltipPopupOpen}/>
                     </Route>
