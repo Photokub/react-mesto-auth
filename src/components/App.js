@@ -139,6 +139,7 @@ function App() {
         const res = await Auth.register({password, email});
         authenticate(res);
         setIsInfoTooltipPopupOpen(true)
+        setUserData({password, email})
         return res;
     }, [authenticate]);
 
