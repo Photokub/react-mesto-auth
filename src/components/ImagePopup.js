@@ -4,7 +4,6 @@ export function ImagePopup({isOpen, card, onClose}) {
     return (
         <section
             className={`popup popup_full-size-image  ${isOpen  ? 'popup_opened' : ''}`}
-            type='button'
             aria-label="попап полноразмерного изображения"
         >
             <div className="popup__container-full-size-image">

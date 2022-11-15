@@ -1,10 +1,10 @@
 import {PopupWithForm} from "./PopupWithForm";
 
-export function ConfirmPopup({isOpen, onClose, onDelete, card}){
+export function ConfirmPopup({isOpen, onClose, onConfirm, card}){
 
     const handleDeleteClick =(e) => {
         e.preventDefault();
-        onDelete(card)
+        onConfirm(card)
     }
 
     return(

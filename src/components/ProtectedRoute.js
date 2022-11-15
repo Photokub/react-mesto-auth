@@ -9,12 +9,4 @@ const ProtectedRoute = ({component: Component, loggedIn, ...props}) => {
     )
 }
 
-// const ProtectedRoute = ({loggedIn, children}) => {
-//     return (
-//         <Route>
-//             {loggedIn ? children : <Redirect to="./sign-up"/>}
-//         </Route>
-//     )
-// }
-
 export default ProtectedRoute;

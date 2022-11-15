@@ -26,7 +26,6 @@ export function Login({isLoggedId, onLogin}) {
         return <Redirect to="/"/>;
     }
 
-
     return (
         <main className="main">
             <section className="login">

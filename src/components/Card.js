@@ -34,8 +34,13 @@ export function Card({
 
     return (
         <div className="element">
-            <button className={cardDeleteButtonClassName} type="button" onClick={handleConfirmClick}></button>
-            <img className="element__image" src={card.link} alt={card.name} onClick={handleCardClick}/>
+            <button className={cardDeleteButtonClassName}
+                    type="button"
+                    onClick={handleConfirmClick}></button>
+            <img className="element__image"
+                 src={card.link}
+                 alt={card.name}
+                 onClick={handleCardClick}/>
             <h2 className="element__title">{card.name}</h2>
             <button className={cardLikeButtonClassName} type="button" onClick={handleLikeClick}></button>
             <span className="element__like-counter">{card.likes.length}</span>

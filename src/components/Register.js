@@ -27,7 +27,6 @@ export function Register({isLoggedId, onRegister}) {
         return <Redirect to="/"/>;
     }
 
-
     return (
         <main className="main">
             <section className="login">

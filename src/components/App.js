@@ -15,6 +15,8 @@ import {Route, Switch, Redirect, Link} from 'react-router-dom';
 import ProtectedRoute from "./ProtectedRoute";
 import {InfoTooltip} from "./InfoTooltip";
 import * as Auth from '../utils/Auth.js';
+import sucсessIcon from "../images/sucсess.svg"
+import failureIcon from "../images/failure.svg"
 
 
 function App() {
@@ -33,15 +35,21 @@ function App() {
         username: "", email: ""
     })
 
-
     useEffect(() => {
-        api.getUserInfo()
-            .then(data => {
-                setCurrentUser(data)
-            }).catch((err) => {
-            console.log(`Ошибка ${err}`)
-        })
-    }, [])
+        Promise.all(
+            api.getDefaultCards()
+                .then(data => {
+                    setCards(data)
+                }),
+            api.getUserInfo()
+                .then(data => {
+                    setCurrentUser(data)
+                })
+        )
+            .catch((err) => {
+                console.log(`Ошибка ${err}`)
+            })
+    }, []);
 
     function handleEditAvatarClick() {
         setIsEditAvatarPopupOpen(true)
@@ -93,14 +101,6 @@ function App() {
         })
     }
 
-    useEffect(() => {
-        api.getDefaultCards().then(data => {
-            setCards(data)
-        }).catch((err) => {
-            console.log(`Ошибка ${err}`)
-        })
-    }, []);
-
     function handleCardLike(card) {
         const isLiked = card.likes.some(i => i._id === currentUser._id);
 
@@ -136,16 +136,16 @@ function App() {
     }, []);
 
     const registration = useCallback(async ({password, email}) => {
-            try{const res = await Auth.register({password, email});
-                authenticate(res);
-                setIsInfoTooltipPopupOpen(true)
-                setUserData({password, email})
-                return res;
-            }catch{
-                setIsInfoTooltipPopupOpen(true)
-            }
-        }, [authenticate]);
-
+        try {
+            const res = await Auth.register({password, email});
+            authenticate(res);
+            setIsInfoTooltipPopupOpen(true)
+            setUserData({password, email})
+            return res;
+        } catch {
+            setIsInfoTooltipPopupOpen(true)
+        }
+    }, [authenticate]);
 
     const login = useCallback(async ({password, email}) => {
             try {
@@ -157,7 +157,7 @@ function App() {
                     authenticate(data)
                     setUserData({password, email})
                 }
-            }catch {
+            } catch {
                 setIsInfoTooltipPopupOpen(true)
                 console.log("Неверное имя или пароль")
             }
@@ -248,7 +248,7 @@ function App() {
                 <ConfirmPopup
                     isOpen={isConfirmPopupOpen}
                     onClose={closeAllPopups}
-                    onDelete={handleCardDelete}
+                    onConfirm={handleCardDelete}
                     card={selectedCard}
                 />
 
@@ -256,8 +256,11 @@ function App() {
                     isOpen={isInfoTooltipPopupOpen}
                     onClose={closeAllPopups}
                     loggedIn={loggedIn}
+                    successText="Вы успешно зарегистрировались!"
+                    failureText="Что-то пошло не так! Попробуйте ещё раз."
+                    sucсessIcon={sucсessIcon}
+                    failureIcon={failureIcon}
                 />
-
 
             </div>
         </CurrentUserContext.Provider>
