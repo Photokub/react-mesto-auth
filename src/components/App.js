@@ -151,10 +151,12 @@ function App() {
                 }
                 if (data.token) {
                     authenticate(data)
+                    // setIsInfoTooltipPopupOpen(true)
                     setUserData({password, email})
                 }
-            } finally {
-                setIsInfoTooltipPopupOpen(false)
+            }catch {
+                setIsInfoTooltipPopupOpen(true)
+                console.log("Неверное имя или пароль")
             }
         }
     )

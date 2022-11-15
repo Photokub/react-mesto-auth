@@ -20,9 +20,10 @@ export function Login({isLoggedId, onLogin, onInfoTooltip}) {
     const handleSubmit = (e) => {
         e.preventDefault();
         onLogin(userData)
-            .catch(
-                onInfoTooltip
-            )
+            // .catch(
+            //     // onInfoTooltip
+            //     console.log("Произошла ошибка")
+            // )
     }
 
     if (isLoggedId) {
