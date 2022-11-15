@@ -136,12 +136,16 @@ function App() {
     }, []);
 
     const registration = useCallback(async ({password, email}) => {
-        const res = await Auth.register({password, email});
-        authenticate(res);
-        setIsInfoTooltipPopupOpen(true)
-        setUserData({password, email})
-        return res;
-    }, [authenticate]);
+            try{const res = await Auth.register({password, email});
+                authenticate(res);
+                setIsInfoTooltipPopupOpen(true)
+                setUserData({password, email})
+                return res;
+            }catch{
+                setIsInfoTooltipPopupOpen(true)
+            }
+        }, [authenticate]);
+
 
     const login = useCallback(async ({password, email}) => {
             try {
@@ -151,7 +155,6 @@ function App() {
                 }
                 if (data.token) {
                     authenticate(data)
-                    // setIsInfoTooltipPopupOpen(true)
                     setUserData({password, email})
                 }
             }catch {

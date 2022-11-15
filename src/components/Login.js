@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {Link, Redirect} from 'react-router-dom';
 
 
-export function Login({isLoggedId, onLogin, onInfoTooltip}) {
+export function Login({isLoggedId, onLogin}) {
 
     const [userData, setUserData] = useState({
         password: "",
@@ -20,10 +20,6 @@ export function Login({isLoggedId, onLogin, onInfoTooltip}) {
     const handleSubmit = (e) => {
         e.preventDefault();
         onLogin(userData)
-            // .catch(
-            //     // onInfoTooltip
-            //     console.log("Произошла ошибка")
-            // )
     }
 
     if (isLoggedId) {

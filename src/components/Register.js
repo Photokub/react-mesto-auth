@@ -2,7 +2,7 @@ import React from "react";
 import {Link, Redirect} from "react-router-dom";
 import {useState} from 'react';
 
-export function Register({isLoggedId, onRegister, onInfoTooltip}) {
+export function Register({isLoggedId, onRegister}) {
 
     const [userData, setUserData] = useState({
         email: '',
@@ -21,9 +21,6 @@ export function Register({isLoggedId, onRegister, onInfoTooltip}) {
         let {password, email} = userData;
         e.preventDefault();
         onRegister({password, email})
-            // .catch(
-            //     onInfoTooltip
-            // )
     }
 
     if (isLoggedId) {
