@@ -36,16 +36,11 @@ function App() {
     })
 
     useEffect(() => {
-        Promise.all(
-            api.getDefaultCards()
-                .then(data => {
-                    setCards(data)
-                }),
-            api.getUserInfo()
-                .then(data => {
-                    setCurrentUser(data)
-                })
-        )
+        Promise.all([api.getDefaultCards(), api.getUserInfo()])
+            .then(([data, dataUser]) => {
+                setCards(data);
+                setCurrentUser(dataUser)
+            })
             .catch((err) => {
                 console.log(`Ошибка ${err}`)
             })
@@ -135,7 +130,7 @@ function App() {
         setLoggedIn(true)
     }, []);
 
-    const registration = useCallback(async ({password, email}) => {
+    const register = useCallback(async ({password, email}) => {
         try {
             const res = await Auth.register({password, email});
             authenticate(res);
@@ -221,7 +216,7 @@ function App() {
                         />
                     </Route>
                     <Route path="/sign-up">
-                        <Register isLoggedId={loggedIn} onRegister={registration}
+                        <Register isLoggedId={loggedIn} onRegister={register}
                                   onInfoTooltip={setIsInfoTooltipPopupOpen}/>
                     </Route>
                     <Route>

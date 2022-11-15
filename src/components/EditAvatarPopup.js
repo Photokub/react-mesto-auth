@@ -14,7 +14,7 @@ export function EditAvatarPopup({isOpen, onClose, onUpdateAvatar}) {
     }
 
     useEffect(() =>{
-        avatarRef.current.value=("")
+        avatarRef.current.value=""
     },[onClose])
 
     return (
